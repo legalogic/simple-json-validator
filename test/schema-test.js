@@ -37,3 +37,43 @@ test('number fail', async (t) => {
   
   t.end()
 })
+
+test('object', async (t) => {
+  const schema = 'object'
+  const value = {}
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('object - array', async (t) => {
+  const schema = 'object'
+  const value = []
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('string', async (t) => {
+  const schema = 'string'
+  const value = 'bla bla'
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('boolean', async (t) => {
+  const schema = 'boolean'
+  const value = true
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('boolean fail', async (t) => {
+  const schema = 'boolean'
+  const value = {}
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
