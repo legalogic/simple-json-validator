@@ -452,3 +452,79 @@ test('function fail', async (t) => {
 
   t.end()
 })
+
+test('function 2', async (t) => {
+  const schema = [
+    {
+      a: "string",
+      b: function (val) {
+        if (!val.id) {
+          throw new Error('** id missing **')
+        }
+      }
+    }
+  ]
+
+  const value = [
+    {
+      a: "aa",
+      b: {
+        id: '123'
+      }
+    },
+    {
+      a: "bb",
+      b: {
+        id: '456'
+      }
+    }
+  ]
+
+  validator.validate(schema, value)
+
+  t.pass()
+  t.end()
+})
+
+test('function 2 fail', async (t) => {
+  const schema = [
+    {
+      a: "string",
+      b: function (val) {
+        if (!val.id) {
+          throw new Error('** id missing **')
+        }
+      }
+    }
+  ]
+
+  const value = [
+    {
+      a: "aa",
+      b: {
+        id: '123'
+      }
+    },
+    {
+      a: "bb",
+      b: {
+        id: null
+      }
+    }
+  ]
+
+  let errMsg = ''
+  try {
+    validator.validate(schema, value)
+  } catch (err) {
+    errMsg = err.message
+  }
+
+  if (errMsg.includes('[1,"b"]') && errMsg.includes('** id missing **')) {
+    t.pass()
+  } else {
+    t.fail()
+  }
+
+  t.end()
+})
