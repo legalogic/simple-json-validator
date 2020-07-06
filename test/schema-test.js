@@ -413,3 +413,42 @@ test('nullable', async (t) => {
   t.pass()
   t.end()
 })
+
+test('function', async (t) => {
+  const schema = function (value) {
+    // do nothing
+  }
+
+  const value = {
+    'a': "aaaa"
+  }
+
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('function fail', async (t) => {
+  const schema = function (value) {
+    throw new Error('*custom failure*')
+  }
+
+  const value = {
+    'a': "aaaa"
+  }
+
+  let errMsg = ''
+  try {
+    validator.validate(schema, value)
+  } catch (err) {
+    errMsg = err.message
+  }
+
+  if (errMsg.includes('*custom failure*')) {
+    t.pass()
+  } else {
+    t.fail()
+  }
+
+  t.end()
+})
