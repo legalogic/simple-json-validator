@@ -235,3 +235,60 @@ test('object 3 fail', async (t) => {
 
   t.end()
 })
+
+test('object 3 fail 2', async (t) => {
+  const schema = {
+    a: "number",
+    b: {
+      c1: {
+        e: {
+          f: {
+            g: "boolean",
+            g2: "number",
+            g3: "string"
+          },
+          f2: "string"
+        }
+      },
+      c2: "number",
+      c3: "boolean"
+    },
+    d: "object"
+  }
+  
+  const value = {
+    a: 5.4,
+    b: {
+      c1: {
+        e: {
+          f: {
+            g: false,
+            // g2 missing
+            g3: "avc"
+          },
+          f2: "qqq"
+        }
+      },
+      c2: 99,
+      c3: true
+    },
+    d: null,
+    dMissing: {}
+  }
+
+  let errorMsg = ''
+
+  try {
+    validator.validate(schema, value)  
+  } catch (err) {
+    errorMsg = err.message
+  }
+
+  if(errorMsg.includes('["b","c1","e","f","g2"]')){
+    t.pass()
+  } else {
+    t.fail()
+  }
+
+  t.end()
+})
