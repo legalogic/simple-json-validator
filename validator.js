@@ -76,6 +76,8 @@ const validateComplex = (schema, value, path) => {
   }
 }
 
+// TODO: support custom function
+
 /**
  * Recursively validate value using schema. On error throw exception with the path to the failed field.
  * @param {*} schema 
