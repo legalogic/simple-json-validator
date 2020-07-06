@@ -76,17 +76,17 @@ test('boolean fail', async (t) => {
   const value = {}
   let exceptionTriggered = false
   try {
-    validator.validate(schema, value)  
+    validator.validate(schema, value)
   } catch (error) {
     exceptionTriggered = true
   }
 
-  if(exceptionTriggered){
+  if (exceptionTriggered) {
     t.pass()
   } else {
     t.fail()
   }
-  
+
   t.end()
 })
 
@@ -102,6 +102,31 @@ test('object 1', async (t) => {
     b: "bb",
     c: false,
     d: {}
+  }
+
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('object 2', async (t) => {
+  const schema = {
+    a: "number",
+    b: {
+      c1: "string",
+      c2: "number",
+      c3: "boolean"
+    },
+    d: "object"
+  }
+  const value = {
+    a: 4,
+    b: {
+      c1: "sss",
+      c2: 44,
+      c3: true
+    },
+    d: { p: 1 }
   }
 
   validator.validate(schema, value)
