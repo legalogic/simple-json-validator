@@ -6,6 +6,7 @@ const type = {
   NUMBER: 'number',
   BOOLEAN: 'boolean',
   OBJECT: 'object',
+  FUNCTION: 'function',
   UNDEFINED: 'undefined'
 }
 
@@ -108,7 +109,18 @@ const validateComplex = (schema, value, path) => {
   }
 }
 
-// TODO: support custom function
+/**
+ * @param {Function} func a function that receives a value and throws and exception if value not validated (returns otherwise)
+ * @param {*} value 
+ * @param {(string | number)[]} path 
+ */
+const validateCustomFunction = (func, value, path) => {
+  try {
+    func(value)
+  } catch (err) {
+    throw new ValidationError(path, err.message)
+  }
+}
 
 /**
  * Recursively validate value using schema. On error throw exception with the path to the failed field.
@@ -124,6 +136,9 @@ const validateRec = (schema, value, path) => {
       break
     case type.OBJECT:
       validateComplex(schema, value, path)
+      break
+    case type.FUNCTION:
+      validateCustomFunction(schema, value, path)
       break
     case type.UNDEFINED:
       // do nothing
