@@ -1,6 +1,14 @@
 // @ts-check
 const { ValidationError } = require('./utils/errors')
 
+const type = {
+  STRING: 'string',
+  NUMBER: 'number',
+  BOOLEAN: 'boolean',
+  OBJECT: 'object',
+  UNDEFINED: 'undefined'
+}
+
 /**
  * Supported primitives: string / number / boolean / object
  * @param {string} schema 
@@ -35,6 +43,16 @@ const validateArray = (schema, arr, path) => {
 }
 
 /**
+ * @param {string | number} key 
+ * @param {*} obj 
+ */
+const getSchemaField = (key, obj) => {
+  if (typeof key != type.STRING) {
+
+  }
+}
+
+/**
  * @param {Object} schema 
  * @param {*} obj
  * @param {(string | number)[]} path 
@@ -46,7 +64,7 @@ const validateObject = (schema, obj, path) => {
 
   // at this point schema is an object so value must be an object to pass
   if (!obj ||
-    (typeof obj).toLowerCase() != 'object' ||
+    (typeof obj).toLowerCase() != type.OBJECT ||
     Array.isArray(obj)) {
     throw new ValidationError(path)
   }
@@ -87,13 +105,13 @@ const validateComplex = (schema, value, path) => {
 const validateRec = (schema, value, path) => {
   const schemaType = (typeof schema).toLowerCase()
   switch (schemaType) {
-    case 'string':
+    case type.STRING:
       validatePrimitive(schema, value, path)
       break
-    case 'object':
+    case type.OBJECT:
       validateComplex(schema, value, path)
       break
-    case 'undefined':
+    case type.UNDEFINED:
       // do nothing
       break
     default:
