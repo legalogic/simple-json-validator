@@ -44,10 +44,11 @@ const validateObject = (schema, obj, path) => {
   }
 
   // both schema and value are objects
-  for (const key of schema) {
+  for (const key of Object.keys(schema)) {
     // TODO: support nullable (?)
     const schemaVal = schema[key]
     const field = obj[key]
+
     path.push(key)
     validateRec(schemaVal, field, path)
     path.pop()
