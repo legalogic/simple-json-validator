@@ -28,25 +28,30 @@ const validateArray = (schema, value, path) => {
 /**
  * Supported primitives: string / number / boolean / object
  * @param {Object} schema 
- * @param {*} value 
+ * @param {*} obj
  * @param {string[]} path 
  */
-const validateObject = (schema, value, path) => {
-  if (!schema) { // schema == null
+const validateObject = (schema, obj, path) => {
+  if (!schema) { // schema == null (typeof null is object)
     return
   }
 
   // at this point schema is an object so value must be an object to pass
-  if (!value || (typeof value).toLowerCase() != 'object' || Array.isArray(value)) {
+  if (!obj ||
+    (typeof obj).toLowerCase() != 'object' ||
+    Array.isArray(obj)) {
     throw new ValidationError(path)
   }
 
   // both schema and value are objects
   for (const key of schema) {
-    const val = schema[key]
-    // TODO: complete
+    // TODO: support nullable (?)
+    const schemaVal = schema[key]
+    const field = obj[key]
+    path.push(key)
+    validateRec(schemaVal, field, path)
+    path.pop()
   }
-
 }
 
 /**
