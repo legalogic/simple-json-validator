@@ -5,7 +5,7 @@ const { ValidationError } = require('./utils/errors')
  * Supported primitives: string / number / boolean / object
  * @param {string} schema 
  * @param {*} value 
- * @param {string[]} path 
+ * @param {(string | number)[]} path 
  */
 const validatePrimitive = (schema, value, path) => {
   schema = schema.toLowerCase()
@@ -16,20 +16,28 @@ const validatePrimitive = (schema, value, path) => {
 }
 
 /**
- * Supported primitives: string / number / boolean / object
  * @param {*[]} schema 
- * @param {*} value 
- * @param {string[]} path 
+ * @param {*} arr 
+ * @param {(string | number)[]} path 
  */
-const validateArray = (schema, value, path) => {
-  // TODO: complete
+const validateArray = (schema, arr, path) => {
+  if (!Array.isArray(arr)) {
+    throw new ValidationError(path)
+  }
+
+  const schemaVal = schema[0] // could be undefined
+  for (let i = 0; i < arr.length; i++) {
+    const val = arr[i]
+    path.push(i)
+    validateRec(schemaVal, val, path)
+    path.pop()
+  }
 }
 
 /**
- * Supported primitives: string / number / boolean / object
  * @param {Object} schema 
  * @param {*} obj
- * @param {string[]} path 
+ * @param {(string | number)[]} path 
  */
 const validateObject = (schema, obj, path) => {
   if (!schema) { // schema == null (typeof null is object)
@@ -58,7 +66,7 @@ const validateObject = (schema, obj, path) => {
 /**
  * @param {Object} schema 
  * @param {*} value 
- * @param {string[]} path 
+ * @param {(string | number)[]} path 
  */
 const validateComplex = (schema, value, path) => {
   if (Array.isArray(schema)) {
@@ -72,7 +80,7 @@ const validateComplex = (schema, value, path) => {
  * Recursively validate value using schema. On error throw exception with the path to the failed field.
  * @param {*} schema 
  * @param {*} value 
- * @param {*} path 
+ * @param {(string | number)[]} path 
  */
 const validateRec = (schema, value, path) => {
   const schemaType = (typeof schema).toLowerCase()
