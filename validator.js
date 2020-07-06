@@ -43,13 +43,22 @@ const validateArray = (schema, arr, path) => {
 }
 
 /**
- * @param {string | number} key 
+ * Returns the schema field. Will be different from key only if it is nullable (ends with '?') and doesn't exist as is in obj
+ * @param {string} key 
  * @param {*} obj 
  */
 const getSchemaField = (key, obj) => {
-  if (typeof key != type.STRING) {
-
+  if (!key || typeof key != type.STRING || !key.endsWith('?')) {
+    return { objField: key, nullable: false }
   }
+
+  // key ends with '?'
+  if (obj[key]) {
+    return { objField: key, nullable: false }
+  }
+
+  const strippedKey = key.substring(0, key.length - 1)
+  return { objField: strippedKey, nullable: true }
 }
 
 /**
@@ -71,12 +80,17 @@ const validateObject = (schema, obj, path) => {
 
   // both schema and value are objects
   for (const key of Object.keys(schema)) {
-    // TODO: support nullable (?)
-    const schemaVal = schema[key]
-    const field = obj[key]
+    const { objField, nullable } = getSchemaField(key, obj)
 
-    path.push(key)
-    validateRec(schemaVal, field, path)
+    const schemaVal = schema[key]
+    const objVal = obj[objField]
+
+    if (nullable && !objVal) {
+      continue
+    }
+
+    path.push(objField)
+    validateRec(schemaVal, objVal, path)
     path.pop()
   }
 }
