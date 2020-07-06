@@ -198,7 +198,7 @@ test('object 3 fail', async (t) => {
     },
     d: "object"
   }
-  
+
   const value = {
     a: 5.4,
     b: {
@@ -222,12 +222,12 @@ test('object 3 fail', async (t) => {
   let errorMsg = ''
 
   try {
-    validator.validate(schema, value)  
+    validator.validate(schema, value)
   } catch (err) {
     errorMsg = err.message
   }
 
-  if(errorMsg.includes('["b","c1","e","f","g2"]')){
+  if (errorMsg.includes('["b","c1","e","f","g2"]')) {
     t.pass()
   } else {
     t.fail()
@@ -255,7 +255,7 @@ test('object 3 fail 2', async (t) => {
     },
     d: "object"
   }
-  
+
   const value = {
     a: 5.4,
     b: {
@@ -279,16 +279,118 @@ test('object 3 fail 2', async (t) => {
   let errorMsg = ''
 
   try {
-    validator.validate(schema, value)  
+    validator.validate(schema, value)
   } catch (err) {
     errorMsg = err.message
   }
 
-  if(errorMsg.includes('["b","c1","e","f","g2"]')){
+  if (errorMsg.includes('["b","c1","e","f","g2"]')) {
     t.pass()
   } else {
     t.fail()
   }
 
+  t.end()
+})
+
+test('array', async (t) => {
+  const schema = ['string']
+  const value = ['a', 'b', 'c']
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('array fail', async (t) => {
+  const schema = ['string']
+  const value = ['a', 'b', 3]
+
+  let errMsg = ''
+
+  try {
+    validator.validate(schema, value)
+  } catch (err) {
+    errMsg = err.message
+  }
+
+  if (errMsg.includes('[2]')) {
+    t.pass()
+  } else {
+    t.fail()
+  }
+
+  t.pass()
+  t.end()
+})
+
+test('array complex', async (t) => {
+  const schema = [{
+    a: "string",
+    b: "number"
+  }]
+
+  const value = [{
+    a: "aaa",
+    b: 22
+  },
+  {
+    a: "bbb",
+    b: 33
+  }]
+
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('array complex 2', async (t) => {
+  const schema = {
+    arr: [{
+      obj: [{
+        a: "number",
+        b: "string"
+      }]
+    }],
+    b: "number"
+  }
+
+  const value = {
+    arr: [
+      {
+        obj: [{
+          a: 66,
+          b: "fffff"
+        },
+        {
+          a: 44,
+          b: "fsdf"
+        }]
+      },
+      {
+        obj: [{
+          a: 22,
+          b: "aaaa"
+        },
+        {
+          a: 445,
+          b: "fssdfdf"
+        }]
+      },
+      {
+        obj: [{
+          a: 88,
+          b: "fsdf"
+        },
+        {
+          a: 44222,
+          b: "adsfasdf"
+        }]
+      }
+    ],
+    b: 88
+  }
+
+  validator.validate(schema, value)
+  t.pass()
   t.end()
 })
