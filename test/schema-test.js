@@ -293,6 +293,48 @@ test('object 3 fail 2', async (t) => {
   t.end()
 })
 
+test('object 4', async (t) => {
+  const schema = {
+    1: "string",
+    "b": "boolean"
+  }
+  const value = {
+    1: "aaaa",
+    "b": false
+  }
+
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('object 4 fail', async (t) => {
+  const schema = {
+    1: "string",
+    "b": "boolean"
+  }
+  const value = {
+    1: 11,
+    "b": false
+  }
+
+  let errMsg = ''
+
+  try {
+    validator.validate(schema, value)  
+  } catch (err) {
+    errMsg = err.message
+  }
+
+  if(errMsg.includes('["1"]')){
+    t.pass()
+  } else {
+    t.fail()
+  }
+  
+  t.end()
+})
+
 test('array', async (t) => {
   const schema = ['string']
   const value = ['a', 'b', 'c']
