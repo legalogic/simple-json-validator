@@ -363,7 +363,8 @@ test('array complex 2', async (t) => {
         },
         {
           a: 44,
-          b: "fsdf"
+          b: "fsdf",
+          c: false // will ignore that
         }]
       },
       {
