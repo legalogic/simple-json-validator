@@ -395,3 +395,21 @@ test('array complex 2', async (t) => {
   t.pass()
   t.end()
 })
+
+test('nullable', async (t) => {
+  const schema = {
+    'a': "string",
+    'b?': "number",
+    'b??': "number",
+    'c?': "number"
+  }
+
+  const value = {
+    'a': "aaaa",
+    'b?': 77
+  }
+
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
