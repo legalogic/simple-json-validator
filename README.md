@@ -7,11 +7,13 @@ If the json is valid it returns, otherwise it throws exception with the path to 
 ```js script
 const validator = require('simple-json-validator')
 // primitives
+
 validator.validate("number", 3) // true
 validator.validate("number", "3") // exception
 validator.validate("string", "3") // true
 validator.validate("boolean", false) // true
 validator.validate("object", {}) // true
+validator.validate("any", {a : 5}) // true
 
 // objects
 validator.validate({num : "number"}, {num: 3}) // true
