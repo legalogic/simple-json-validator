@@ -321,23 +321,31 @@ test('object 4 fail', async (t) => {
   let errMsg = ''
 
   try {
-    validator.validate(schema, value)  
+    validator.validate(schema, value)
   } catch (err) {
     errMsg = err.message
   }
 
-  if(errMsg.includes('["1"]')){
+  if (errMsg.includes('["1"]')) {
     t.pass()
   } else {
     t.fail()
   }
-  
+
   t.end()
 })
 
 test('array', async (t) => {
   const schema = ['string']
   const value = ['a', 'b', 'c']
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('nested array', async (t) => {
+  const schema = [['number']]
+  const value = [[1, 3], [5, 7]]
   validator.validate(schema, value)
   t.pass()
   t.end()
