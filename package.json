@@ -16,6 +16,11 @@
     "url": "https://github.com/legalogic/simple-json-validator/issues"
   },
   "homepage": "https://github.com/legalogic/simple-json-validator#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint . --fix && printf \"\n\\033[1;33mESLint Test -->\\033[0m \\033[0;42m\\033[1;97m PASSED \\033[0m\n\n\" || exit"
+    }
+  },
   "devDependencies": {
     "tap-spec": "^5.0.0",
     "tape": "^5.0.1"
