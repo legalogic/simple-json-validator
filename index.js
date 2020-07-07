@@ -7,17 +7,21 @@ const type = {
   BOOLEAN: 'boolean',
   OBJECT: 'object',
   FUNCTION: 'function',
-  UNDEFINED: 'undefined'
+  UNDEFINED: 'undefined',
+  ANY: 'any'
 }
 
 /**
- * Supported primitives: string / number / boolean / object
+ * Supported primitives: string / number / boolean / object / any
  * @param {string} schema 
  * @param {*} value 
  * @param {(string | number)[]} path 
  */
 const validatePrimitive = (schema, value, path) => {
   schema = schema.toLowerCase()
+  if (schema === type.ANY) {
+    return
+  }
   const valType = (typeof value).toLowerCase()
   if (valType != schema) {
     throw new ValidationError(path)

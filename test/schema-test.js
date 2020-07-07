@@ -12,6 +12,22 @@ const validator = require('../index')
 // ******************************************* Unit tests *******************************************************
 // **************************************************************************************************************
 
+test('any', async (t) => {
+  const schema = 'any'
+  const value = 3
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('any 2', async (t) => {
+  const schema = 'any'
+  const value = [3]
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
 test('number', async (t) => {
   const schema = 'number'
   const value = 3
