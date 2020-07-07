@@ -1,8 +1,8 @@
 {
   "name": "simple-json-validator",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
-  "main": "validator.js",
+  "main": "index.js",
   "scripts": {
     "test": "tape test/*.js !test/mocks/*.js | tap-spec"
   },

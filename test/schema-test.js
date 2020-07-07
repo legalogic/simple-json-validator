@@ -6,7 +6,7 @@ process.on('unhandledRejection', (reason, p) => {
 
 const test = require('tape')
 
-const validator = require('../validator')
+const validator = require('../index')
 
 // **************************************************************************************************************
 // ******************************************* Unit tests *******************************************************
