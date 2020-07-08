@@ -22,6 +22,7 @@ validator.validate({}, {num: 3}) // true (validate is object)
 validator.validate({}, null) // true (null is an object)
 validator.validate({}, []]) // fails (even though array is object you should [] or 'object' as schema)
 validator.validate({num : "number"}, {num: 3}) // true
+// optional
 validator.validate({num : "number", "opt?": "string"}, {num: 3}) // true 
 // optional fields end with '?'. 
 // if there is an actual field that ends with '?' we can make it optional by adding an additional '?' ('opt??')
