@@ -8,7 +8,7 @@ const type = {
   OBJECT: 'object',
   FUNCTION: 'function',
   UNDEFINED: 'undefined',
-  ANY: 'any'
+  DEFINED: 'defined'
 }
 
 /**
@@ -19,8 +19,11 @@ const type = {
  */
 const validatePrimitive = (schema, value, path) => {
   schema = schema.toLowerCase()
-  if (schema === type.ANY) {
-    return
+  if (schema === type.DEFINED) {
+    if (typeof value === type.UNDEFINED) {
+      throw new ValidationError(path)
+    }
+    return // value is defined (can be null)
   }
   const valType = (typeof value).toLowerCase()
   if (valType != schema) {

@@ -13,7 +13,8 @@ validator.validate("number", "3") // exception
 validator.validate("string", "3") // true
 validator.validate("boolean", false) // true
 validator.validate("object", {}) // true
-validator.validate("any", {a : 5}) // true
+validator.validate("defined", {a : 5}) // true
+validator.validate("defined", null) // true (will only fail if value is undefined. can be used to check existence of keys in an object)
 
 // objects
 validator.validate({num : "number"}, {num: 3}) // true

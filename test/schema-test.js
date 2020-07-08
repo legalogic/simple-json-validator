@@ -12,18 +12,47 @@ const validator = require('../index')
 // ******************************************* Unit tests *******************************************************
 // **************************************************************************************************************
 
-test('any', async (t) => {
-  const schema = 'any'
+test('defined', async (t) => {
+  const schema = 'defined'
   const value = 3
   validator.validate(schema, value)
   t.pass()
   t.end()
 })
 
-test('any 2', async (t) => {
-  const schema = 'any'
+test('defined 2', async (t) => {
+  const schema = 'defined'
   const value = [3]
   validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('defined 3', async (t) => {
+  const schema = 'defined'
+  const value = null
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('defined fail', async (t) => {
+  const schema = 'defined'
+  const obj = {}
+
+  let exceptionTriggered = false
+  try {
+    validator.validate(schema, obj.key) // obj.key is undefined
+  } catch {
+    exceptionTriggered = true
+  }
+
+  if (exceptionTriggered) {
+    t.pass()
+  } else {
+    t.fail
+  }
+  
   t.pass()
   t.end()
 })
