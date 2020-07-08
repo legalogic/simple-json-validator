@@ -8,6 +8,22 @@ const test = require('tape')
 
 const validator = require('../index')
 
+
+const validateFailure = (test, schema, value) => {
+  let exceptionTriggered = false
+  try {
+    validator.validate(schema, value) // obj.key is undefined
+  } catch {
+    exceptionTriggered = true
+  }
+
+  if (exceptionTriggered) {
+    test.pass()
+  } else {
+    test.fail()
+  }
+}
+
 // **************************************************************************************************************
 // ******************************************* Unit tests *******************************************************
 // **************************************************************************************************************
@@ -39,21 +55,7 @@ test('defined 3', async (t) => {
 test('defined fail', async (t) => {
   const schema = 'defined'
   const obj = {}
-
-  let exceptionTriggered = false
-  try {
-    validator.validate(schema, obj.key) // obj.key is undefined
-  } catch {
-    exceptionTriggered = true
-  }
-
-  if (exceptionTriggered) {
-    t.pass()
-  } else {
-    t.fail
-  }
-  
-  t.pass()
+  validateFailure(t, schema, obj.key)
   t.end()
 })
 
@@ -68,19 +70,7 @@ test('number', async (t) => {
 test('number fail', async (t) => {
   const schema = 'number'
   const value = 'a'
-  let exceptionTriggered = false
-  try {
-    validator.validate(schema, value)
-  } catch {
-    exceptionTriggered = true
-  }
-
-  if (exceptionTriggered) {
-    t.pass()
-  } else {
-    t.fail
-  }
-
+  validateFailure(t, schema, value)
   t.end()
 })
 
@@ -97,6 +87,21 @@ test('object - array', async (t) => {
   const value = []
   validator.validate(schema, value)
   t.pass()
+  t.end()
+})
+
+test('array', async (t) => {
+  const schema = []
+  const value = []
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('array fail', async (t) => {
+  const schema = []
+  const value = {}
+  validateFailure(t, schema, value)
   t.end()
 })
 
@@ -119,19 +124,7 @@ test('boolean', async (t) => {
 test('boolean fail', async (t) => {
   const schema = 'boolean'
   const value = {}
-  let exceptionTriggered = false
-  try {
-    validator.validate(schema, value)
-  } catch (error) {
-    exceptionTriggered = true
-  }
-
-  if (exceptionTriggered) {
-    t.pass()
-  } else {
-    t.fail()
-  }
-
+  validateFailure(t, schema, value)
   t.end()
 })
 
