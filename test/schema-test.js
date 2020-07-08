@@ -75,10 +75,40 @@ test('number fail', async (t) => {
 })
 
 test('object', async (t) => {
-  const schema = 'object'
+  const schema = {}
   const value = {}
   validator.validate(schema, value)
   t.pass()
+  t.end()
+})
+
+test('object 2', async (t) => {
+  const schema = {}
+  const value = null // null is an object
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('object 3', async (t) => {
+  const schema = {}
+  const value = { num: 3 }
+  validator.validate(schema, value)
+  t.pass()
+  t.end()
+})
+
+test('object fail', async (t) => {
+  const schema = {}
+  const value = undefined
+  validateFailure(t, schema, value)
+  t.end()
+})
+
+test('object fail 2', async (t) => {
+  const schema = {}
+  const value = []
+  validateFailure(t, schema, value)
   t.end()
 })
 

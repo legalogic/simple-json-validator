@@ -80,8 +80,7 @@ const validateObject = (schema, obj, path) => {
   }
 
   // at this point schema is an object so value must be an object to pass
-  if (!obj ||
-    (typeof obj).toLowerCase() != type.OBJECT ||
+  if ((typeof obj).toLowerCase() != type.OBJECT ||
     Array.isArray(obj)) {
     throw new ValidationError(path)
   }
