@@ -1,5 +1,5 @@
 // @ts-check
-const { ValidationError } = require('../utils/errors')
+const { ValidationError } = require('./utils/errors')
 
 const type = {
   STRING: 'string',
