@@ -1,15 +1,6 @@
 // @ts-check
 const { ValidationError } = require('./utils/errors')
-
-const type = {
-  STRING: 'string',
-  NUMBER: 'number',
-  BOOLEAN: 'boolean',
-  OBJECT: 'object',
-  FUNCTION: 'function',
-  UNDEFINED: 'undefined',
-  DEFINED: 'defined'
-}
+const constants = require('./utils/constants')
 
 /**
  * Supported primitives: string / number / boolean / object / any
@@ -19,8 +10,8 @@ const type = {
  */
 const validatePrimitive = (schema, value, path) => {
   schema = schema.toLowerCase()
-  if (schema === type.DEFINED) {
-    if (typeof value === type.UNDEFINED) {
+  if (schema === constants.type.DEFINED) {
+    if (typeof value === constants.type.UNDEFINED) {
       throw new ValidationError(path)
     }
     return // value is defined (can be null)
@@ -56,7 +47,7 @@ const validateArray = (schema, arr, path) => {
  * @param {*} obj 
  */
 const getSchemaField = (key, obj) => {
-  if (!key || typeof key != type.STRING || !key.endsWith('?')) {
+  if (!key || typeof key != constants.type.STRING || !key.endsWith('?')) {
     return { objField: key, nullable: false }
   }
 
@@ -80,7 +71,7 @@ const validateObject = (schema, obj, path) => {
   }
 
   // at this point schema is an object so value must be an object to pass
-  if ((typeof obj).toLowerCase() != type.OBJECT ||
+  if ((typeof obj).toLowerCase() != constants.type.OBJECT ||
     Array.isArray(obj)) {
     throw new ValidationError(path)
   }
@@ -137,16 +128,16 @@ const validateCustomFunction = (func, value, path) => {
 const validateRec = (schema, value, path) => {
   const schemaType = (typeof schema).toLowerCase()
   switch (schemaType) {
-    case type.STRING:
+    case constants.type.STRING:
       validatePrimitive(schema, value, path)
       break
-    case type.OBJECT:
+    case constants.type.OBJECT:
       validateComplex(schema, value, path)
       break
-    case type.FUNCTION:
+    case constants.type.FUNCTION:
       validateCustomFunction(schema, value, path)
       break
-    case type.UNDEFINED:
+    case constants.type.UNDEFINED:
       // do nothing
       break
     default:
