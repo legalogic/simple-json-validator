@@ -12,7 +12,7 @@ const type = {
 }
 
 /**
- * Supported primitives: string / number / boolean / object / any
+ * Supported primitives: string / number / boolean / object 
  * @param {string} schema 
  * @param {*} value 
  * @param {(string | number)[]} path 
