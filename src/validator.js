@@ -3,7 +3,7 @@ const { ValidationError } = require('./utils/errors')
 const constants = require('./utils/constants')
 
 /**
- * Supported primitives: string / number / boolean / object / any
+ * Supported primitives: string / number / boolean / object 
  * @param {string} schema 
  * @param {*} value 
  * @param {(string | number)[]} path 
