@@ -141,7 +141,7 @@ const validateRec = (schema, value, path) => {
       // do nothing
       break
     default:
-      throw new Error(`schema may only be of type string or object but was neither. schema is:${schema}`)
+      throw new Error(`schema may only be of type string / object / function but was neither. schema is:${schema}`)
   }
 }
 
