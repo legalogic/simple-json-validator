@@ -34,7 +34,7 @@ const generatePrimitiveJsDoc = (schema) => {
   schema = schema.toLowerCase()
   switch (schema) {
     case constants.type.STRING:
-
+      return 
       break
 
     // const type = {
