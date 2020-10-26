@@ -1,7 +1,7 @@
 {
-  "name": "simple-json-validator",
+  "name": "@arikkrol/simple-json-validator",
   "version": "1.0.7",
-  "description": "",
+  "description": "This library helps to validate a simple JSON structure. It has one method: validate(schema, json) If the json is valid it returns, otherwise it throws exception with the path to the failed field.",
   "main": "index.js",
   "scripts": {
     "test": "tape test/*.js !test/mocks/*.js | tap-spec"
@@ -24,5 +24,9 @@
   "devDependencies": {
     "tap-spec": "^5.0.0",
     "tape": "^5.0.1"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {}
 }
